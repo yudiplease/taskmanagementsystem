@@ -1,0 +1,55 @@
+bootWar.archiveFileName = "${project.name}.war"
+bootJar.archiveFileName = "${project.name}.jar"
+
+ext {
+    mapstructVersion = '1.5.5.Final'
+    jwtVersion = '0.11.5'
+    jakartaVersion = '3.0.2'
+    lombokVersion = '1.18.30'
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+    implementation "jakarta.validation:jakarta.validation-api:${jakartaVersion}"
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    implementation "io.jsonwebtoken:jjwt-api:${jwtVersion}"
+    implementation "io.jsonwebtoken:jjwt-impl:${jwtVersion}"
+    implementation "io.jsonwebtoken:jjwt-jackson:${jwtVersion}"
+    implementation 'commons-io:commons-io:2.15.0'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation project(':TMS-api')
+    implementation project(':TMS-db')
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+jacocoTestReport {
+
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    project(":TMS-db").sourceSets.main.resources
+            ]
+        }
+    }
+}
+
+bootJar {
+    enabled = true
+}
+
+bootBuildImage {
+    imageName='yudiplease/'+rootProject.name+'-'+project.name
+}

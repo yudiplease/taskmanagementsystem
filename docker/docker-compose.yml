@@ -1,0 +1,27 @@
+version: '3.0'
+
+services:
+  tms-app:
+    image: 'tms_img:latest'
+    build:
+      context: ..
+    container_name: app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - tms-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://tms-db:5432/tms-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=dreges228
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  tms-db:
+    container_name: tms-db
+    image: postgres:latest
+    restart: on-failure
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dreges228
+      POSTGRES_DB: tms-db

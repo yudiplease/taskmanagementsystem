@@ -1,0 +1,5 @@
+rootProject.name = 'TaskManagementSystem'
+include 'TMS-api'
+include 'TMS-db'
+include 'TMS-impl'
+
