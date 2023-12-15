@@ -1,5 +1,5 @@
-bootWar.archiveFileName = "${project.name}.war"
 bootJar.archiveFileName = "${project.name}.jar"
+bootJar.enabled=true
 
 ext {
     mapstructVersion = '1.5.5.Final'
@@ -45,11 +45,6 @@ sourceSets {
         }
     }
 }
-
-bootJar {
-    enabled = true
-}
-
 bootBuildImage {
     imageName='yudiplease/'+rootProject.name+'-'+project.name
 }
